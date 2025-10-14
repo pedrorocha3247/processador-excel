@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processador de Planilhas</title>
+    <style>
+        body { font-family: sans-serif; margin: 2em; background-color: #f4f4f9; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1 { color: #444; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="date"], input[type="file"] {
+            width: 95%; padding: 10px; border-radius: 4px; border: 1px solid #ddd;
+        }
+        input[type="submit"] {
+            width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;
+        }
+        input[type="submit"]:hover { background-color: #0056b3; }
+        .flash-messages { list-style: none; padding: 0; margin-bottom: 20px; }
+        .flash-messages li { padding: 15px; border-radius: 4px; margin-bottom: 10px; }
+        .flash-messages .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .flash-messages .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Processador de Planilhas para TXT</h1>
+        
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flash-messages">
+                {% for message in messages %}
+                    <li class="{{ 'success' if 'sucesso' in message else 'error' }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <form action="/" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="data">Data:</label>
+                <input type="date" id="data" name="data" required>
+            </div>
+            <div class="form-group">
+                <label for="tipo">Tipo:</label>
+                <input type="text" id="tipo" name="tipo" placeholder="Ex: Notificacao_Cliente" required>
+            </div>
+            <div class="form-group">
+                <label for="arquivo_excel">Arquivo Excel:</label>
+                <input type="file" id="arquivo_excel" name="arquivo_excel" accept=".xlsx, .xls" required>
+            </div>
+            <input type="submit" value="Processar Arquivo">
+        </form>
+    </div>
+</body>
+</html>
